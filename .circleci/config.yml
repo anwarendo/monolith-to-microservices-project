@@ -31,7 +31,7 @@ jobs:
             docker tag udagram-reverseproxy anwarendo/udagram-reverseproxy:v1
             echo "-------- All images succesfully built----------"
             echo " ------- login in to hub--------"
-            docker login -u anwarendo -p $DOCKER_PASSWORD
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
             echo "-------------- Pushing images to dockerhub-------"
             docker push anwarendo/udagram-api-feed:v3
             docker push anwarendo/udagram-api-user:v3
