@@ -1,0 +1,17 @@
+# Build
+- docker-compose -f docker-compose-build.yaml build --parallel
+
+# Tagging
+- docker tag udagram-api-feed anwarendo/udagram-api-feed:v1
+- docker tag udagram-api-user anwarendo/udagram-api-user:v1
+- docker tag udagram-frontend anwarendo/udagram-frontend:v1
+- docker tag udagram-reverseproxy anwarendo/udagram-reverseproxy:v1
+
+# Push
+# Assuming DOCKER_PASSWORD and DOCKER_USERNAME are set in the Travis repository settings
+- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+# - docker push anwarendo/udagram-api-feed:v1
+# - docker push anwarendo/udagram-api-user:v1
+# - docker push anwarendo/udagram-frontend:v1
+# - docker push anwarendo/udagram-reverseproxy:v1
+- docker-compose -f docker-compose-build.yaml push
