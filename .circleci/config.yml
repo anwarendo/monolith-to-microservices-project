@@ -1,17 +1,45 @@
-# Build
-- docker-compose -f docker-compose-build.yaml build --parallel
+version: 2.1
 
-# Tagging
-- docker tag udagram-api-feed anwarendo/udagram-api-feed:v1
-- docker tag udagram-api-user anwarendo/udagram-api-user:v1
-- docker tag udagram-frontend anwarendo/udagram-frontend:v1
-- docker tag udagram-reverseproxy anwarendo/udagram-reverseproxy:v1
-
-# Push
-# Assuming DOCKER_PASSWORD and DOCKER_USERNAME are set in the Travis repository settings
-- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-# - docker push anwarendo/udagram-api-feed:v1
-# - docker push anwarendo/udagram-api-user:v1
-# - docker push anwarendo/udagram-frontend:v1
-# - docker push anwarendo/udagram-reverseproxy:v1
-- docker-compose -f docker-compose-build.yaml push
+jobs:
+  lint-app:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+  build-docker:
+    machine: true
+    steps:
+      - checkout
+      - run:
+          name: Build docker container for each microservices
+          command: |
+            echo "--------- Installing dependencies-----------"
+            sudo curl -LO https://nodejs.org/dist/v18.0.0/node-v18.0.0-linux-x64.tar.xz
+            sudo tar -xvf node-v18.0.0-linux-x64.tar.xz
+            sudo cp -r node-v18.0.0-linux-x64/{bin,include,lib,share} /usr/
+            node --version => v18.0.0
+            sudo apt install nodejs
+            echo "--------- The images is Building ------------"
+            docker build -t udagram-api-feed ./udagram-api-feed
+            docker tag udagram-api-feed anwarendo/udagram-api-feed:v1
+            docker build -t udagram-api-user ./udagram-api-user
+            docker tag udagram-api-user anwarendo/udagram-api-user:v1
+            
+            docker build -t udagram-frontend ./udagram-frontend
+            docker tag udagram-frontend anwarendo/udagram-frontend:v1
+            docker build -t udagram-reverseproxy ./udagram-reverseproxy
+            docker tag udagram-reverseproxy anwarendo/udagram-reverseproxy:v1
+            echo "-------- All images succesfully built----------"
+            echo " ------- login in to hub--------"
+            docker login -u anwarendo -p $DOCKER_PASSWORD
+            echo "-------------- Pushing images to dockerhub-------"
+            docker push anwarendo/udagram-api-feed:v3
+            docker push anwarendo/udagram-api-user:v3
+            docker push anwarendo/udagram-frontend:v3
+            docker push anwarendo/udagram-reverseproxy:v3
+workflows:
+  default:
+    jobs:
+      - lint-app
+      - build-docker:
+          requires: [lint-app]
