@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: reverseproxy
-        image: docker.io/anwarendo/udagram-reverseproxy:v1
+        image: docker.io/anwarendo/udagram-reverseproxy:v2
         ports:
         - containerPort: 80
         resources:
