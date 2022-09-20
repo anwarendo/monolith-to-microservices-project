@@ -28,7 +28,7 @@ jobs:
             docker build -t udagram-frontend ./udagram-frontend
             docker tag udagram-frontend anwarendo/udagram-frontend:v1
             docker build -t udagram-reverseproxy ./udagram-reverseproxy
-            docker tag udagram-reverseproxy anwarendo/udagram-reverseproxy:v1
+            docker tag udagram-reverseproxy anwarendo/udagram-reverseproxy:v2
             echo "-------- All images succesfully built----------"
             echo " ------- login in to hub--------"
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
@@ -36,7 +36,7 @@ jobs:
             docker push anwarendo/udagram-api-feed:v1
             docker push anwarendo/udagram-api-user:v1
             docker push anwarendo/udagram-frontend:v1
-            docker push anwarendo/udagram-reverseproxy:v1
+            docker push anwarendo/udagram-reverseproxy:v2
 workflows:
   default:
     jobs:
