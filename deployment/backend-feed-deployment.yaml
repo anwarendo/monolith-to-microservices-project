@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: backend-feed
-        image: docker.io/anwarendo/udagram-api-feed:v2
+        image: docker.io/anwarendo/udagram-api-feed:v3
         ports:
         - containerPort: 80
         resources:
