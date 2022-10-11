@@ -19,9 +19,6 @@ jobs:
             sudo cp -r node-v18.0.0-linux-x64/{bin,include,lib,share} /usr/
             node --version => v18.0.0
             sudo apt install nodejs
-
-            echo "Removing unused and dangling images
-            docker image prune --all
             
             echo "--------- The images are Building ------------"
             docker build -t udagram-api-feed ./udagram-api-feed
