@@ -21,22 +21,23 @@ jobs:
             sudo apt install nodejs
             echo "--------- The images are Building ------------"
             docker build -t udagram-api-feed ./udagram-api-feed
-            docker tag udagram-api-feed anwarendo/udagram-api-feed:v2
+            docker tag udagram-api-feed anwarendo/udagram-api-feed:v3
             docker build -t udagram-api-user ./udagram-api-user
-            docker tag udagram-api-user anwarendo/udagram-api-user:v2
+            docker tag udagram-api-user anwarendo/udagram-api-user:v3
             
             docker build -t udagram-frontend ./udagram-frontend
-            docker tag udagram-frontend anwarendo/udagram-frontend:v2
+            docker tag udagram-frontend anwarendo/udagram-frontend:v3
             docker build -t udagram-reverseproxy ./udagram-reverseproxy
-            docker tag udagram-reverseproxy anwarendo/udagram-reverseproxy:v2
+            docker tag udagram-reverseproxy anwarendo/udagram-reverseproxy:v3
             echo "-------- All images succesfully built----------"
             echo " ------- login in to Dockerhub--------"
             echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+            
             echo "-------------- Pushing images to Dockerhub-------"
-            docker push anwarendo/udagram-api-feed:v2
-            docker push anwarendo/udagram-api-user:v2
-            docker push anwarendo/udagram-frontend:v2
-            docker push anwarendo/udagram-reverseproxy:v2
+            docker push anwarendo/udagram-api-feed:v3
+            docker push anwarendo/udagram-api-user:v3
+            docker push anwarendo/udagram-frontend:v3
+            docker push anwarendo/udagram-reverseproxy:v3
 workflows:
   default:
     jobs:
