@@ -26,7 +26,7 @@ jobs:
             docker tag udagram-api-user anwarendo/udagram-api-user:v3
             
             docker build -t udagram-frontend ./udagram-frontend
-            docker tag udagram-frontend anwarendo/udagram-frontend:v3
+            docker tag udagram-frontend anwarendo/udagram-frontend:v4
             docker build -t udagram-reverseproxy ./udagram-reverseproxy
             docker tag udagram-reverseproxy anwarendo/udagram-reverseproxy:v3
             echo "-------- All images succesfully built----------"
@@ -36,7 +36,7 @@ jobs:
             echo "-------------- Pushing images to Dockerhub-------"
             docker push anwarendo/udagram-api-feed:v3
             docker push anwarendo/udagram-api-user:v3
-            docker push anwarendo/udagram-frontend:v3
+            docker push anwarendo/udagram-frontend:v4
             docker push anwarendo/udagram-reverseproxy:v3
 workflows:
   default:
